@@ -61,3 +61,7 @@ Demo screenshots and the capture fixture live in [`store/`](store/). Chrome Web 
 Website source: [`docs/`](docs/). `npm run site` refreshes the shared privacy notice and artwork locally. Planned home: `https://soupdiver.github.io/stretch/`. **Nothing is published automatically.**
 
 Tests mock provider APIs. No live inference guarantee. SVG source and PNG icons live in `assets/`; regenerate with `CHROMIUM_PATH=/usr/bin/chromium node scripts/render-icons.mjs` or an installed Playwright Chromium.
+
+## > kudos
+
+Inspired by [cc-stretch](https://github.com/pro-vi/cc-stretch) by **pro-vi**, which brings Ted Nelson’s stretchtext idea to Claude Code. Stretch takes that reading idea to the browser.
