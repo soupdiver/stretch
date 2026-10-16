@@ -1,0 +1,11 @@
+:root { color-scheme: light dark; font: 16px/1.65 system-ui, sans-serif; --ink:#202820; --paper:#f4f5ef; --accent:#285942; }
+* { box-sizing:border-box; }
+body { margin:0; color:var(--ink); background:var(--paper); }
+main { width:min(100% - 32px, 760px); margin:0 auto; padding:52px 0 72px; }
+.eyebrow { color:var(--accent); font-size:.75rem; font-weight:750; letter-spacing:.14em; }
+h1,h2 { font-family:Georgia,serif; font-weight:500; line-height:1.2; }
+h1 { font-size:clamp(2.4rem,8vw,4rem); }
+h2 { margin-top:2rem; }
+a { color:var(--accent); }
+.pending { border-left:3px solid #a35524; padding:12px; background:#a3552410; }
+@media (prefers-color-scheme:dark) { :root { --ink:#e6e9e1; --paper:#171d19; --accent:#9dccaa; } }

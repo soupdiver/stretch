@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>Stretch settings</title>
+  <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="options.css">
+</head>
+<body>
+  <main class="shell">
+    <header class="intro">
+      <div class="brand"><img src="assets/logo.svg" width="44" height="44" alt=""><p class="eyebrow">STRETCH · PREFERENCES</p></div>
+      <h1>Make reading lighter.</h1>
+      <p>Choose the API that will shorten eligible page text when you activate Stretch.</p>
+    </header>
+    <form id="settings" class="settings-card">
+      <section aria-labelledby="providerHeading">
+        <p class="section-kicker">01 · PROVIDER</p>
+        <h2 id="providerHeading">Where requests go</h2>
+        <label for="provider">AI provider</label>
+        <select id="provider" name="provider">
+          <option value="anthropic">Anthropic</option>
+          <option value="openai">OpenAI</option>
+          <option value="openrouter">OpenRouter</option>
+        </select>
+        <p class="hint">Each provider keeps its own key and model. Switching here does not erase the other profiles.</p>
+      </section>
+      <section aria-labelledby="consentHeading">
+        <p class="section-kicker">04 · PRIVACY</p>
+        <h2 id="consentHeading">Choose what leaves this tab</h2>
+        <label class="consent"><input id="websiteTextConsent" type="checkbox"> I agree to send text from pages I activate Stretch on to my selected provider for shortening. I understand provider policies apply.</label>
+        <p class="hint">This permission is required before any page text is sent. You can revoke it here; saved credentials remain until you remove them.</p>
+        <a href="privacy.html" target="_blank">Read the Stretch privacy notice</a>
+      </section>
+      <section aria-labelledby="modelHeading">
+        <p class="section-kicker">02 · MODEL</p>
+        <h2 id="modelHeading">Choose a model</h2>
+        <label for="model">Model ID</label>
+        <input id="model" name="model" list="modelOptions" autocomplete="off" required>
+        <select id="modelSelect" aria-label="Discovered models" disabled><option value="">Choose a discovered model…</option></select>
+        <datalist id="modelOptions"></datalist>
+        <p class="hint">You can enter a model ID directly. A catalog listing does not guarantee account access or structured-output support.</p>
+        <button id="refreshModels" type="button" data-action>Refresh models</button>
+      </section>
+      <section aria-labelledby="credentialsHeading">
+        <p class="section-kicker">03 · CREDENTIALS</p>
+        <h2 id="credentialsHeading">Keep your key private</h2>
+        <label for="apiKey">API key</label>
+        <input id="apiKey" name="apiKey" type="password" autocomplete="new-password" placeholder="Paste an API key">
+        <p class="hint">Leave the field blank to keep the saved key. Keys stay in local extension storage and are used only by the extension service worker.</p>
+        <button id="clearKey" type="button" class="quiet" data-action>Remove saved key</button>
+        <div id="workspaceField" class="conditional" hidden>
+          <label for="workspaceId">Anthropic Workspace ID <span class="optional">optional</span></label>
+          <input id="workspaceId" name="workspaceId" placeholder="wrkspc_…" autocomplete="off" pattern="wrkspc_[A-Za-z0-9]+" aria-describedby="workspaceHelp">
+          <p id="workspaceHelp" class="hint">Only needed for keys that can access more than one workspace. <a href="https://platform.claude.com/settings/workspaces" target="_blank" rel="noreferrer">Find your ID in Claude Console</a>.</p>
+        </div>
+      </section>
+      <footer class="actions">
+        <p id="status" role="status" aria-live="polite">Loading settings…</p>
+        <div class="buttons">
+          <button id="testConnection" type="button" class="secondary" data-action>Test connection</button>
+          <button type="submit" class="primary">Save settings</button>
+        </div>
+      </footer>
+    </form>
+    <aside class="notice">
+      <strong>API access, not a subscription.</strong>
+      <p>These providers use direct API keys; API usage can be billable and is separate from ChatGPT or Claude subscriptions. Connection tests send a small billable synthetic request, never page content. <a href="privacy.html">Privacy notice</a></p>
+    </aside>
+  </main>
+  <script src="options.js"></script>
+</body>
+</html>

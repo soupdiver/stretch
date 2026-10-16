@@ -1,0 +1,25 @@
+{
+  "name": "chrome-stretchtext",
+  "version": "0.1.0",
+  "license": "MIT",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node esbuild.config.mjs",
+    "build:test": "TEST_BUILD=1 node esbuild.config.mjs",
+    "test": "vitest run --config vitest.config.ts",
+    "test:browser": "npm run build:test && playwright test",
+    "release": "npm run build && node scripts/package-release.mjs",
+    "screenshots": "npm run build:test && node scripts/capture-store.mjs",
+    "site": "node scripts/build-site.mjs"
+  },
+  "devDependencies": {
+    "@types/chrome": "^0.1.36",
+    "@types/node": "^24.0.0",
+    "@playwright/test": "^1.56.0",
+    "esbuild": "^0.28.0",
+    "jsdom": "^26.0.0",
+    "typescript": "^5.9.0",
+    "vitest": "^5.0.4"
+  }
+}

@@ -1,0 +1,18 @@
+:root { color-scheme: dark; font: 14px/1.7 ui-monospace, "SFMono-Regular", Consolas, monospace; color: #e4eaf2; background: #080b11; }
+* { box-sizing: border-box; }
+body { margin: 0; min-height: 100svh; display: grid; place-items: center; }
+main { width: min(580px, calc(100% - 40px)); padding: 56px 0; }
+.meta { margin: 0 0 32px; color: #8a95a9; font-size: 11px; letter-spacing: .12em; }
+.indicator { display: inline-block; width: 5px; height: 5px; margin: 0 6px 2px 0; background: #ff5bd1; }
+header { display: flex; align-items: center; gap: 18px; }
+h1 { margin: 0; font: 800 clamp(32px, 8vw, 58px)/1 ui-monospace, monospace; letter-spacing: -.065em; }
+h1 span { color: #64fff1; }
+.description { margin: 28px 0 20px; font-size: clamp(19px, 4vw, 23px); line-height: 1.5; letter-spacing: -.035em; }
+.controls { color: #a2adc0; font-size: 13px; }
+nav { display: flex; flex-wrap: wrap; gap: 12px 24px; margin: 28px 0; padding: 18px 0; border-top: 1px solid #222b3c; border-bottom: 1px solid #222b3c; }
+a { color: #64fff1; text-decoration: none; }
+a:hover { color: #ff8be0; text-decoration: underline; text-underline-offset: .25em; }
+a:focus-visible { outline: 2px solid #ff8be0; outline-offset: 5px; }
+.fine, footer { color: #8a95a9; font-size: 11px; }
+footer { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; margin-top: 36px; }
+@media (max-width: 400px) { header { gap: 12px; } header img { width: 48px; height: 48px; } }

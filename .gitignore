@@ -1,0 +1,12 @@
+dist/
+node_modules/
+releases/
+playwright-report/
+test-results/
+.browser-profile/
+/*-PACKET.md
+/store/*.md
+.env
+.env.*
+*.pem
+*.key

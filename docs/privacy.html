@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>Stretch privacy notice</title>
+  <link rel="stylesheet" href="privacy.css">
+</head>
+<body>
+  <main>
+    <p class="eyebrow">STRETCH · PRIVACY</p>
+    <h1>Privacy notice</h1>
+    <p>Stretch is an open-source Chrome extension maintained by soupdiver. It shortens selected or eligible page prose when you activate it. This notice applies to the extension and its project website.</p>
+    <p>Effective date: 15 October 2026. For support or privacy questions, email <a href="mailto:stretch@rainbowfab.org">stretch@rainbowfab.org</a>. You can also report bugs through <a href="https://github.com/soupdiver/stretch/issues">Stretch GitHub Issues</a> once the repository is published. Never send API keys, and do not include private page text or other sensitive information in a public issue.</p>
+    <h2>What is sent and when</h2>
+    <p>Only after explicit activation and consent, the extension sends eligible source text and the selected model request to the provider you configured: Anthropic, OpenAI, or OpenRouter. Requests include the provider API credential and, for Anthropic where configured, workspace identifier. The provider receives ordinary connection metadata such as your IP address. OpenRouter may transmit prompts to the downstream model provider selected by its service. Provider and downstream retention, processing, and training terms are governed by their policies; Stretch cannot promise zero retention.</p>
+    <p>Connection tests send a small fixed synthetic request and may incur a charge. Model discovery sends an authenticated catalog request but no page text. Both are initiated by you.</p>
+    <h2>Storage and access</h2>
+    <p>API keys, model preferences, and your website-text consent are stored in Chrome's local extension storage. The storage is not encrypted by Stretch and is not synced by the extension. Credentials are restricted to trusted extension contexts, not exposed to websites. Original page nodes and text are retained in the active tab's memory to support restoration; they are not sent back to a Stretch-operated server.</p>
+    <h2>Use and sharing</h2>
+    <p>Stretch has no developer-operated backend, analytics, or advertising. Page text and authentication information are used only to provide the user-requested shortening through the selected provider. They are not sold or used for advertising or unrelated purposes. This is the extension's Limited Use commitment under the <a href="https://developer.chrome.com/docs/webstore/program-policies/limited-use/">Chrome Web Store Limited Use requirements</a>.</p>
+    <h2>Your choices and limitations</h2>
+    <p>Revoke consent in extension settings to prevent future page requests. Revoking consent does not remove saved credentials. Remove a credential in settings and separately revoke it with the provider; uninstalling removes extension-local data according to Chrome behavior. Stretch cannot delete provider-side records. Avoid sending sensitive content unless you have reviewed the relevant provider terms. AI shortening can omit or distort meaning; verify against the original.</p>
+    <p>Stretch processes eligible visible prose only. It does not traverse cross-origin frames, PDFs, canvas, or closed shadow roots; controls, code, tables, and unsupported selections are skipped.</p>
+    <h2>Provider policies</h2>
+    <ul>
+      <li><a href="https://www.anthropic.com/legal/privacy">Anthropic privacy</a></li>
+      <li><a href="https://openai.com/policies/privacy-policy/">OpenAI privacy</a></li>
+      <li><a href="https://openrouter.ai/privacy">OpenRouter privacy</a></li>
+    </ul>
+    <h2>Project website and support</h2>
+    <p>The planned project website is hosted with GitHub Pages. GitHub may process visitor connection information, including IP addresses, to provide and secure hosting. GitHub also processes account information and any content you choose to submit through Issues under its <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement">privacy statement</a>. The website does not request your provider API key and includes no analytics or advertising scripts.</p>
+  </main>
+</body>
+</html>

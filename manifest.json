@@ -1,0 +1,13 @@
+{
+  "manifest_version": 3,
+  "name": "Stretch",
+  "version": "0.1.0",
+  "description": "Shorten eligible prose in place and expand it back on demand.",
+  "minimum_chrome_version": "120",
+  "permissions": ["activeTab", "storage", "scripting", "contextMenus"],
+  "host_permissions": ["https://api.anthropic.com/*", "https://api.openai.com/*", "https://openrouter.ai/api/*"],
+  "background": { "service_worker": "background.js" },
+  "icons": { "16": "assets/icon-16.png", "32": "assets/icon-32.png", "48": "assets/icon-48.png", "128": "assets/icon-128.png" },
+  "action": { "default_title": "Toggle Stretch", "default_icon": { "16": "assets/icon-16.png", "32": "assets/icon-32.png" } },
+  "options_page": "options.html"
+}

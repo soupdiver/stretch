@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 128 128" role="img" aria-labelledby="title">
+  <title id="title">Stretch — cyber S</title>
+  <defs>
+    <linearGradient id="signal" x1="28" y1="28" x2="100" y2="100" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#64fff1"/>
+      <stop offset=".48" stop-color="#28dcfa"/>
+      <stop offset="1" stop-color="#bd76ff"/>
+    </linearGradient>
+  </defs>
+  <rect x="2" y="2" width="124" height="124" rx="25" fill="#0a0e19"/>
+  <rect x="3" y="3" width="122" height="122" rx="24" fill="none" stroke="#28354e" stroke-width="2"/>
+  <path d="M100 28H48L28 48V70H78V82H28V100H80L100 80V52H50V46H100Z" fill="url(#signal)"/>
+  <path d="M95 23H108V28H95ZM20 100H33V105H20Z" fill="#ff5bd1"/>
+</svg>
