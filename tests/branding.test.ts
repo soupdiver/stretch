@@ -14,4 +14,13 @@ describe('Stretch branding', () => {
       expect(png.readUInt32BE(20)).toBe(Number(size));
     }
   });
+
+  it('provides two 1280×800 listing screenshots', () => {
+    for (const name of ['screenshot-reading.png', 'screenshot-settings.png']) {
+      const png = readFileSync(`store/assets/${name}`);
+      expect(png.subarray(0, 8).toString('hex')).toBe('89504e470d0a1a0a');
+      expect(png.readUInt32BE(16)).toBe(1280);
+      expect(png.readUInt32BE(20)).toBe(800);
+    }
+  });
 });
