@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Stretch",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Shorten eligible prose in place and expand it back on demand.",
   "minimum_chrome_version": "120",
   "permissions": ["activeTab", "storage", "scripting", "contextMenus"],

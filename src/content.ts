@@ -1,4 +1,5 @@
 import { MAX_BLOCKS, MAX_TEXT_LENGTH, MAX_BATCH_CHARS, MAX_TOTAL_BLOCKS, MAX_TOTAL_CHARS, type TextBlock, type Summary } from './shared';
+import { morph, cancelMorph } from './morph';
 
 type Managed = { id: string; element: HTMLElement; original: DocumentFragment; originalNodes: Node[]; source: string; summary: string; control: HTMLButtonElement; controlShape: string; expanded: boolean; snapshot: string };
 const managed = new Map<string, Managed>();
@@ -186,11 +187,15 @@ function snapshot(element: HTMLElement, control?: HTMLButtonElement): string {
 
 function compress(element: HTMLElement, id: string, text: string, summary: string): void {
   const original = document.createDocumentFragment();
-  while (element.firstChild) original.append(element.firstChild);
-  const control = makeControl('stretchtext-summary', summary, false, (event) => { event.stopPropagation(); expand(id); });
-  element.append(control);
-  const item: Managed = { id, element, original, originalNodes: Array.from(original.childNodes), source: text, summary, control, controlShape: shape(control), expanded: false, snapshot: snapshotFromNodes(Array.from(original.childNodes)) };
-  managed.set(id, item); watch(item);
+  const focused = element.contains(document.activeElement);
+  morph(element, () => {
+    while (element.firstChild) original.append(element.firstChild);
+    const control = makeControl('stretchtext-summary', summary, false, (event) => { event.stopPropagation(); expand(id); });
+    element.append(control);
+    const item: Managed = { id, element, original, originalNodes: Array.from(original.childNodes), source: text, summary, control, controlShape: shape(control), expanded: false, snapshot: snapshotFromNodes(Array.from(original.childNodes)) };
+    managed.set(id, item); watch(item);
+    if (focused) control.focus({ preventScroll: true });
+  });
 }
 
 function snapshotFromNodes(nodes: Node[]): string { return nodes.map(shape).join(''); }
@@ -210,6 +215,7 @@ function watch(item: Managed): void {
     documentObserver.observe(document.documentElement, { childList: true, subtree: true });
   }
   const observer = new MutationObserver(() => {
+    cancelMorph(item.element);
     const changed = item.expanded
       ? snapshot(item.element, item.control) !== `${item.snapshot}# ` || item.element.lastChild !== item.control || shape(item.control) !== item.controlShape
       : item.element.childNodes.length !== 1 || item.element.firstChild !== item.control || shape(item.control) !== item.controlShape;
@@ -221,20 +227,29 @@ function watch(item: Managed): void {
 function expand(id: string): void {
   const item = managed.get(id);
   if (!item || !collapsedUnchanged(item)) { discardChanged(id); return; }
-  observerById.get(id)?.disconnect(); item.element.replaceChildren(item.original); item.expanded = true;
-  item.control = makeControl('stretchtext-collapse', 'Collapse', true, (event) => { event.stopPropagation(); collapseBlock(id); });
-  item.controlShape = shape(item.control);
-  item.element.append(document.createTextNode(' '), item.control); watch(item);
+  const focused = document.activeElement === item.control;
+  observerById.get(id)?.disconnect();
+  morph(item.element, () => {
+    item.element.replaceChildren(item.original); item.expanded = true;
+    item.control = makeControl('stretchtext-collapse', 'Collapse', true, (event) => { event.stopPropagation(); collapseBlock(id); });
+    item.controlShape = shape(item.control);
+    item.element.append(document.createTextNode(' '), item.control); watch(item);
+    if (focused) item.control.focus({ preventScroll: true });
+  });
 }
 
 function collapseBlock(id: string): void {
   const item = managed.get(id);
   if (!item || !expandedUnchanged(item)) { discardChanged(id); return; }
+  const focused = document.activeElement === item.control;
   observerById.get(id)?.disconnect();
-  for (const node of item.originalNodes) item.original.append(node);
-  item.element.replaceChildren(); item.control = makeControl('stretchtext-summary', item.summary, false, (event) => { event.stopPropagation(); expand(id); });
-  item.controlShape = shape(item.control);
-  item.element.append(item.control); item.expanded = false; watch(item);
+  morph(item.element, () => {
+    for (const node of item.originalNodes) item.original.append(node);
+    item.element.replaceChildren(); item.control = makeControl('stretchtext-summary', item.summary, false, (event) => { event.stopPropagation(); expand(id); });
+    item.controlShape = shape(item.control);
+    item.element.append(item.control); item.expanded = false; watch(item);
+    if (focused) item.control.focus({ preventScroll: true });
+  });
 }
 
 function collapsedUnchanged(item: Managed): boolean { return item.control.isConnected && item.element.childNodes.length === 1 && item.element.firstChild === item.control && shape(item.control) === item.controlShape; }
@@ -245,6 +260,7 @@ function expandedUnchanged(item: Managed): boolean {
 function discardChanged(id: string, restore = true): void {
   observerById.get(id)?.disconnect(); observerById.delete(id);
   const item = managed.get(id);
+  if (item) cancelMorph(item.element);
   if (item && restore) release(item);
   managed.delete(id); sourceNodes.delete(id);
   stopDocumentObserverIfIdle();
@@ -252,6 +268,7 @@ function discardChanged(id: string, restore = true): void {
 
 function release(item: Managed): void {
   const { element, control } = item;
+  cancelMorph(element);
   if (!element.isConnected) return;
   if (!item.expanded) {
     if (control.parentElement === element && shape(control) === item.controlShape) {

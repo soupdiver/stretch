@@ -5,7 +5,9 @@ import { resolve } from 'node:path';
 
 const manifest = JSON.parse(await readFile('dist/manifest.json', 'utf8'));
 const pkg = JSON.parse(await readFile('package.json', 'utf8'));
-if (manifest.name !== 'Stretch' || manifest.version !== pkg.version || manifest.version !== '0.1.0') throw new Error('Release name/version mismatch.');
+if (manifest.name !== 'Stretch' || manifest.version !== pkg.version) throw new Error('Release name/version mismatch.');
+const versionParts = typeof manifest.version === 'string' ? manifest.version.split('.') : [];
+if (!versionParts.length || versionParts.length > 4 || !versionParts.every((part) => /^(0|[1-9]\d*)$/.test(part) && Number(part) <= 65535) || !versionParts.some((part) => Number(part) > 0)) throw new Error('Invalid numeric extension version.');
 if (manifest.host_permissions.some((host) => host.includes('127.0.0.1') || host.includes('localhost'))) throw new Error('Local test host permission found.');
 const files = ['manifest.json', 'LICENSE', 'background.js', 'content.js', 'options.js', 'options.html', 'options.css', 'privacy.html', 'privacy.css', 'assets/logo.svg', ...Object.keys(manifest.icons).map((size) => manifest.icons[size])];
 for (const path of files) await readFile(`dist/${path}`);

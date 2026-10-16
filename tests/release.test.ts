@@ -3,7 +3,8 @@ import { readFileSync, writeFileSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 import { spawnSync } from 'node:child_process';
 
-const zipPath = 'releases/stretch-0.1.0.zip';
+const version = JSON.parse(readFileSync('package.json', 'utf8')).version;
+const zipPath = `releases/stretch-${version}.zip`;
 function packageRelease() { return spawnSync(process.execPath, ['scripts/package-release.mjs'], { encoding: 'utf8', timeout: 10000 }); }
 
 describe('production release invariants', () => {
@@ -42,7 +43,7 @@ describe('production release invariants', () => {
       expect(png.readUInt32BE(20)).toBe(Number(size));
     }
     const hash = createHash('sha256').update(readFileSync(zipPath)).digest('hex');
-    expect(readFileSync(`${zipPath}.sha256`, 'utf8')).toBe(`${hash}  stretch-0.1.0.zip\n`);
+    expect(readFileSync(`${zipPath}.sha256`, 'utf8')).toBe(`${hash}  stretch-${version}.zip\n`);
   });
 
   it('refuses either test-only handler hook in production', () => {

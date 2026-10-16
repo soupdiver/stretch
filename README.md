@@ -39,6 +39,8 @@ Anthropic multi-workspace key? Add your `wrkspc_…` ID from [Console → Worksp
 
 ## > known edges
 
+Visible prose morphs word by word over roughly 400ms: shared words slide into place while removed/added words fade around nearby anchors. Safe block layouts resize smoothly; selection wrappers remain inline. Original nodes and event handlers are preserved. Reduced motion, offscreen text, complex geometry, long passages (over 180 tokens), and concurrent block updates use immediate swaps. Scrolling, resizing, interacting again, or restoring cancels the visual overlay without undoing the requested state.
+
 Prose only. Code, tables, controls, media, and hidden content are skipped. No Chrome internal pages, PDFs, canvas, or iframe/shadow-root traversal. Dynamic sites may resist modification.
 
 ## > verify
